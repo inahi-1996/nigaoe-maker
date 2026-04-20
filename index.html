@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>似顔絵メーカー</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ヘッダー -->
+    <header class="header">
+      <span class="header__title">似顔絵メーカー</span>
+      <span class="header__credit">Made with 🍎 by hi_ki</span>
+    </header>
+
+    <div class="main-content">
+
+      <!-- プレビューエリア -->
+      <div class="preview-wrap">
+        <canvas id="preview" class="preview"></canvas>
+        <button id="btnDone" class="btn-done">完成！&gt;</button>
+      </div>
+
+      <!-- 右パネル（タブ＋グリッド） -->
+      <div class="right-panel">
+
+        <!-- カテゴリタブ（顔タイプは構成が複数になったら追加） -->
+        <div class="tabs" role="group" aria-label="パーツカテゴリ">
+          <button class="chip is-active" data-cat="eyes">目</button>
+          <button class="chip" data-cat="eyebrows">眉毛</button>
+          <button class="chip" data-cat="nose">鼻</button>
+          <button class="chip" data-cat="mouth">口</button>
+          <button class="chip" data-cat="hair">髪</button>
+        </div>
+
+        <!-- パーツ選択グリッド -->
+        <div class="part-scroll">
+          <div id="partGrid" class="part-grid"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- トースト -->
+    <div id="toast" class="toast" hidden>画像を保存しました</div>
+
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>

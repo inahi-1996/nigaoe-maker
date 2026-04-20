@@ -1,0 +1,242 @@
+:root {
+  --accent: #2FAF5B;
+  --accent-light: #EAF7EE;
+  --shadow: 0 10px 30px rgba(0,0,0,0.10);
+  --font: "Zen Maru Gothic", system-ui, -apple-system, sans-serif;
+  --radius-pill: 999px;
+  --radius-card: 16px;
+  --radius-thumb: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: #ffffff;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 420px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ヘッダー */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+}
+.header__title {
+  font-size: 18px;
+  font-weight: 900;
+  font-family: var(--font);
+  color: #23B470;
+}
+.header__credit {
+  font-size: 12px;
+  color: #888;
+  font-weight: 700;
+}
+
+/* プレビューエリア */
+.preview-wrap {
+  position: relative;
+  margin: 0 0 16px;
+  background: #E4F6ED;
+  border-radius: 0;
+  aspect-ratio: 1 / 1;
+  padding: 20px;
+}
+.preview {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #ffffff;
+  border-radius: 16px;
+}
+.btn-done {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 900;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(47,175,91,0.35);
+}
+
+/* カテゴリタブ */
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex-shrink: 0;
+  border: none;
+  background: rgba(0,0,0,0.07);
+  color: #222;
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.chip.is-active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* パーツ選択グリッド */
+.part-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+.part-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 8px 16px 24px;
+}
+.part-thumb {
+  aspect-ratio: 1 / 1;
+  background: #fff;
+  border-radius: var(--radius-thumb);
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #CED9D4;
+  transition: border-color 0.15s;
+}
+.part-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+}
+.part-thumb.is-selected {
+  border-color: var(--accent);
+}
+.part-thumb__check {
+  display: none;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+}
+.part-thumb.is-selected .part-thumb__check {
+  display: flex;
+}
+.part-thumb__check::after {
+  content: "";
+  width: 5px;
+  height: 9px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+/* 「なし」ラベル */
+.part-thumb__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #aaa;
+}
+
+/* ワイドレイアウト */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.right-panel {
+  display: contents; /* 通常時は透過 */
+}
+
+@media (min-width: 680px) {
+  #app {
+    max-width: 100%;
+  }
+  .header {
+    padding: 16px 28px 12px;
+  }
+  .main-content {
+    flex-direction: row;
+    overflow: hidden;
+  }
+  /* プレビュー左パネル：縦全体に伸び、キャンバスは正方形を維持 */
+  .preview-wrap {
+    flex-shrink: 0;
+    width: auto;
+    aspect-ratio: unset;
+    align-self: stretch;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .preview {
+    width: auto;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: calc(100vh - 56px);
+  }
+  /* 右パネル：残り幅を全部使い、高さも届かせる */
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .part-scroll {
+    flex: 1;
+  }
+}
+
+/* トースト */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: -52px;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.78);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 100;
+  transition: bottom 0.2s ease;
+}
