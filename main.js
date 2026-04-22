@@ -2,13 +2,10 @@
 
 // =====================
 // パーツ定義
-// 顔タイプを増やす場合は face 配列に追加するだけ
-// タブに出す場合は index.html の .tabs にボタンを追加
 // =====================
 const PARTS = {
   face: [
     { id: "face_01", label: "卵型", src: "assets/face/face_01.svg" },
-    // 顔タイプが増えたらここに追加
   ],
   eyes: [
     { id: "eye_01", label: "細目",     src: "assets/eye/eye_01.svg" },
@@ -61,10 +58,8 @@ const PARTS = {
     { id: "hair_09", label: "hair_09", src: "assets/hair/hair_09.svg" },
     { id: "hair_00", label: "なし",     src: "" },
   ],
-
 }
 
-// レイヤー描画順（face が常に最下層）
 const LAYER_ORDER = ["face", "nose", "mouth", "eyes", "eyebrows", "hair"]
 
 // =====================
@@ -93,7 +88,7 @@ const btnDone  = document.getElementById("btnDone")
 const toast    = document.getElementById("toast")
 
 const CANVAS_SIZE = 500
-const CANVAS_PADDING = 48  // イラスト描画の余白
+const CANVAS_PADDING = 48
 canvas.width  = CANVAS_SIZE
 canvas.height = CANVAS_SIZE
 
@@ -142,14 +137,12 @@ function renderGrid() {
       img.alt = part.label
       thumb.appendChild(img)
     }
-    // 「なし」ラベル表示
     if (!part.src) {
       const label = document.createElement("span")
       label.className = "part-thumb__label"
       label.textContent = "なし"
       thumb.appendChild(label)
     }
-
     const check = document.createElement("div")
     check.className = "part-thumb__check"
     thumb.appendChild(check)
@@ -204,6 +197,18 @@ function showToast(text) {
     setTimeout(() => (toast.hidden = true), 250)
   }, 1600)
 }
+
+// =====================
+// ローディングオーバーレイを非表示にする
+// =====================
+window.addEventListener('load', () => {
+  const overlay = document.getElementById('loading-overlay')
+  if (!overlay) return
+  overlay.classList.add('hidden')
+  overlay.addEventListener('transitionend', () => {
+    overlay.remove()
+  })
+})
 
 // =====================
 // 起動

@@ -8,14 +8,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
 </head>
 <body>
+
+  <!-- ローディングオーバーレイ -->
+  <div id="loading-overlay">
+    <div class="loader"></div>
+  </div>
+
   <div id="app">
 
     <!-- ヘッダー -->
     <header class="header">
       <span class="header__title">似顔絵メーカー</span>
-      <span class="header__credit">Made with ♡ <a href="https://stone-pocket-ebe.notion.site/3480154fff5780818cbaf1af649b4906?source=copy_link" target="_blank" style="color:#888; text-decoration:none; font-weight:700;">@hi_ki_illustration</a></span>
+      <span class="header__credit">Made with ♡ <a href="https://hi-ki-illustration.notion.site" target="_blank" style="color:#23B470; text-decoration:underline; font-weight:700;">@hi_ki_illustration<span class="material-symbols-outlined" style="font-size:14px; vertical-align:middle; margin-left:2px;">open_in_new</span></a></span>
     </header>
 
     <div class="main-content">
@@ -29,7 +36,7 @@
       <!-- 右パネル（タブ＋グリッド） -->
       <div class="right-panel">
 
-        <!-- カテゴリタブ（顔タイプは構成が複数になったら追加） -->
+        <!-- カテゴリタブ -->
         <div class="tabs" role="group" aria-label="パーツカテゴリ">
           <button class="chip is-active" data-cat="eyes">目</button>
           <button class="chip" data-cat="eyebrows">眉毛</button>
