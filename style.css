@@ -284,7 +284,7 @@ body {
   z-index: 1;
 }
 
-/* 背景：assetsパーツの横スクロール */
+/* 背景：assetsパーツを複数行でスクロール（左上→左下っぽい斜め下方向） */
 .bg-marquee{
   position: absolute;
   inset: 0;
@@ -294,12 +294,33 @@ body {
   z-index: 0;
 }
 .bg-marquee__track{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  justify-content: flex-start;
+  padding: 18px 0;
+  /* 2グループ分を確実に画面より大きくして、下側が空かないようにする */
+  min-height: 200%;
+  animation: bgScrollDiagLoop 18s linear infinite;
+  will-change: transform;
+}
+.bg-marquee__group{
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  /* グループが潰れて下側が薄くならないように */
+  flex: 0 0 auto;
+}
+.bg-marquee__row{
   display: flex;
   width: max-content;
-  height: 100%;
   align-items: center;
-  animation: bgScrollX 26s linear infinite;
 }
+.bg-marquee__row--offset1{ transform: translateX(-90px); opacity: 0.9; }
+.bg-marquee__row--offset2{ transform: translateX(-180px); opacity: 0.8; }
+
 .bg-marquee__pattern{
   display: flex;
   gap: 22px;
@@ -307,13 +328,15 @@ body {
   align-items: center;
 }
 .bg-marquee__pattern img{
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
 }
-@keyframes bgScrollX{
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+
+/* 画面左上→左下方向の流れ感を出すため、Xは少し・Yをしっかり動かす */
+@keyframes bgScrollDiagLoop{
+  from { transform: translate(0, 0); }
+  to   { transform: translate(-20%, -50%); }
 }
 @media (prefers-reduced-motion: reduce){
   .bg-marquee__track{ animation: none; }
@@ -347,6 +370,25 @@ body {
   line-height: 1.7;
   margin-bottom: 18px;
 }
+/* 画面遷移（MD3風：軽いズーム＋フェード） */
+.screen{
+  transition:
+    opacity 220ms cubic-bezier(.2,0,0,1),
+    transform 320ms cubic-bezier(.2,0,0,1);
+  will-change: opacity, transform;
+}
+.screen.is-hidden{
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
+}
+.screen.is-visible{
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* ボタン押下（リップルなし、MD3っぽく沈む） */
 .top__cta{
   width: 100%;
   border: none;
@@ -359,6 +401,13 @@ body {
   border-radius: 999px;
   cursor: pointer;
   box-shadow: 0 10px 24px rgba(35,180,112,0.25);
+  transition:
+    transform 120ms cubic-bezier(.2,0,0,1),
+    box-shadow 180ms cubic-bezier(.2,0,0,1);
+}
+.top__cta:active{
+  transform: scale(0.985);
+  box-shadow: 0 6px 16px rgba(35,180,112,0.18);
 }
 .top__note{
   margin-top: 12px;

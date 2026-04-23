@@ -354,10 +354,32 @@ function showToast(text) {
 // =====================
 // TOP -> Maker
 // =====================
+const SCREEN_TRANSITION_MS = 360
+
+function showScreen(el) {
+  if (!el) return
+  // display:none 相当を解除してからアニメ開始
+  el.style.display = ""
+  el.classList.remove("is-hidden")
+  el.classList.add("is-visible")
+}
+function hideScreen(el) {
+  if (!el) return
+  // 先にアニメ（opacity/scale）させてから display:none 相当でレイアウトから外す
+  el.classList.remove("is-visible")
+  el.classList.add("is-hidden")
+  window.setTimeout(() => {
+    // まだ hidden のままなら本当に隠す（途中で戻った場合に消えないように）
+    if (el.classList.contains("is-hidden")) {
+      el.style.display = "none"
+    }
+  }, SCREEN_TRANSITION_MS)
+}
+
 if (btnStart) {
   btnStart.addEventListener("click", () => {
-    if (topScreen) topScreen.style.display = "none"
-    if (makerScreen) makerScreen.classList.remove("is-hidden")
+    hideScreen(topScreen)
+    showScreen(makerScreen)
     if (headerEl) headerEl.classList.remove("is-hidden")
   })
 }
@@ -365,8 +387,8 @@ if (btnStart) {
 // Maker -> TOP（ヘッダーロゴ）
 if (btnHome) {
   btnHome.addEventListener("click", () => {
-    if (makerScreen) makerScreen.classList.add("is-hidden")
-    if (topScreen) topScreen.style.display = ""
+    hideScreen(makerScreen)
+    showScreen(topScreen)
     if (headerEl) headerEl.classList.add("is-hidden")
   })
 }
@@ -375,5 +397,7 @@ if (btnHome) {
 // 起動
 // =====================
 if (headerEl) headerEl.classList.add("is-hidden")
+hideScreen(makerScreen)
+showScreen(topScreen)
 renderGrid()
 renderCanvas()

@@ -27,35 +27,207 @@
     </header>
 
     <!-- TOP（最初の注意書き） -->
-    <section id="topScreen" class="top">
+    <section id="topScreen" class="top screen is-visible">
 
       <!-- 背景：assetsのパーツを流す（スクロール風） -->
       <div class="bg-marquee" aria-hidden="true">
         <div class="bg-marquee__track">
-          <div class="bg-marquee__pattern">
-            <img src="assets/eye/eye_01.svg" alt="" />
-            <img src="assets/eye/eye_02.svg" alt="" />
-            <img src="assets/brow/brow_01.svg" alt="" />
-            <img src="assets/nose/nose_01.svg" alt="" />
-            <img src="assets/mouth/mouth_01.svg" alt="" />
-            <img src="assets/hair/hair_01.svg" alt="" />
-            <img src="assets/acc/acc_01.svg" alt="" />
-            <img src="assets/eye/eye_03.svg" alt="" />
-            <img src="assets/brow/brow_02.svg" alt="" />
-            <img src="assets/mouth/mouth_02.svg" alt="" />
+
+          <!-- 縦ループ用：同じ背景ブロックを2回並べる -->
+          <div class="bg-marquee__group">
+
+            <div class="bg-marquee__row">
+              <div class="bg-marquee__pattern">
+                <img src="assets/eye/eye_01.svg" alt="" />
+                <img src="assets/eye/eye_02.svg" alt="" />
+                <img src="assets/eye/eye_03.svg" alt="" />
+                <img src="assets/eye/eye_04.svg" alt="" />
+                <img src="assets/brow/brow_01.svg" alt="" />
+                <img src="assets/brow/brow_02.svg" alt="" />
+                <img src="assets/brow/brow_03.svg" alt="" />
+                <img src="assets/nose/nose_01.svg" alt="" />
+                <img src="assets/nose/nose_02.svg" alt="" />
+                <img src="assets/mouth/mouth_01.svg" alt="" />
+                <img src="assets/mouth/mouth_02.svg" alt="" />
+                <img src="assets/mouth/mouth_03.svg" alt="" />
+                <img src="assets/hair/hair_01.svg" alt="" />
+                <img src="assets/hair/hair_02.svg" alt="" />
+                <img src="assets/acc/acc_01.svg" alt="" />
+              </div>
+              <div class="bg-marquee__pattern" aria-hidden="true">
+                <img src="assets/eye/eye_01.svg" alt="" />
+                <img src="assets/eye/eye_02.svg" alt="" />
+                <img src="assets/eye/eye_03.svg" alt="" />
+                <img src="assets/eye/eye_04.svg" alt="" />
+                <img src="assets/brow/brow_01.svg" alt="" />
+                <img src="assets/brow/brow_02.svg" alt="" />
+                <img src="assets/brow/brow_03.svg" alt="" />
+                <img src="assets/nose/nose_01.svg" alt="" />
+                <img src="assets/nose/nose_02.svg" alt="" />
+                <img src="assets/mouth/mouth_01.svg" alt="" />
+                <img src="assets/mouth/mouth_02.svg" alt="" />
+                <img src="assets/mouth/mouth_03.svg" alt="" />
+                <img src="assets/hair/hair_01.svg" alt="" />
+                <img src="assets/hair/hair_02.svg" alt="" />
+                <img src="assets/acc/acc_01.svg" alt="" />
+              </div>
+            </div>
+
+            <div class="bg-marquee__row bg-marquee__row--offset1">
+              <div class="bg-marquee__pattern">
+                <img src="assets/eye/eye_05.svg" alt="" />
+                <img src="assets/eye/eye_06.svg" alt="" />
+                <img src="assets/brow/brow_04.svg" alt="" />
+                <img src="assets/brow/brow_05.svg" alt="" />
+                <img src="assets/nose/nose_03.svg" alt="" />
+                <img src="assets/nose/nose_04.svg" alt="" />
+                <img src="assets/mouth/mouth_04.svg" alt="" />
+                <img src="assets/mouth/mouth_05.svg" alt="" />
+                <img src="assets/hair/hair_03.svg" alt="" />
+                <img src="assets/hair/hair_04.svg" alt="" />
+                <img src="assets/acc/acc_00.svg" alt="" />
+              </div>
+              <div class="bg-marquee__pattern" aria-hidden="true">
+                <img src="assets/eye/eye_05.svg" alt="" />
+                <img src="assets/eye/eye_06.svg" alt="" />
+                <img src="assets/brow/brow_04.svg" alt="" />
+                <img src="assets/brow/brow_05.svg" alt="" />
+                <img src="assets/nose/nose_03.svg" alt="" />
+                <img src="assets/nose/nose_04.svg" alt="" />
+                <img src="assets/mouth/mouth_04.svg" alt="" />
+                <img src="assets/mouth/mouth_05.svg" alt="" />
+                <img src="assets/hair/hair_03.svg" alt="" />
+                <img src="assets/hair/hair_04.svg" alt="" />
+                <img src="assets/acc/acc_00.svg" alt="" />
+              </div>
+            </div>
+
+            <div class="bg-marquee__row bg-marquee__row--offset2">
+              <div class="bg-marquee__pattern">
+                <img src="assets/eye/eye_07.svg" alt="" />
+                <img src="assets/brow/brow_06.svg" alt="" />
+                <img src="assets/brow/brow_07.svg" alt="" />
+                <img src="assets/nose/nose_05.svg" alt="" />
+                <img src="assets/nose/nose_06.svg" alt="" />
+                <img src="assets/mouth/mouth_06.svg" alt="" />
+                <img src="assets/mouth/mouth_07.svg" alt="" />
+                <img src="assets/hair/hair_05.svg" alt="" />
+                <img src="assets/hair/hair_06.svg" alt="" />
+                <img src="assets/hair/hair_07.svg" alt="" />
+              </div>
+              <div class="bg-marquee__pattern" aria-hidden="true">
+                <img src="assets/eye/eye_07.svg" alt="" />
+                <img src="assets/brow/brow_06.svg" alt="" />
+                <img src="assets/brow/brow_07.svg" alt="" />
+                <img src="assets/nose/nose_05.svg" alt="" />
+                <img src="assets/nose/nose_06.svg" alt="" />
+                <img src="assets/mouth/mouth_06.svg" alt="" />
+                <img src="assets/mouth/mouth_07.svg" alt="" />
+                <img src="assets/hair/hair_05.svg" alt="" />
+                <img src="assets/hair/hair_06.svg" alt="" />
+                <img src="assets/hair/hair_07.svg" alt="" />
+              </div>
+            </div>
+
           </div>
-          <div class="bg-marquee__pattern" aria-hidden="true">
-            <img src="assets/eye/eye_01.svg" alt="" />
-            <img src="assets/eye/eye_02.svg" alt="" />
-            <img src="assets/brow/brow_01.svg" alt="" />
-            <img src="assets/nose/nose_01.svg" alt="" />
-            <img src="assets/mouth/mouth_01.svg" alt="" />
-            <img src="assets/hair/hair_01.svg" alt="" />
-            <img src="assets/acc/acc_01.svg" alt="" />
-            <img src="assets/eye/eye_03.svg" alt="" />
-            <img src="assets/brow/brow_02.svg" alt="" />
-            <img src="assets/mouth/mouth_02.svg" alt="" />
+
+          <div class="bg-marquee__group" aria-hidden="true">
+
+            <div class="bg-marquee__row">
+              <div class="bg-marquee__pattern">
+                <img src="assets/eye/eye_01.svg" alt="" />
+                <img src="assets/eye/eye_02.svg" alt="" />
+                <img src="assets/eye/eye_03.svg" alt="" />
+                <img src="assets/eye/eye_04.svg" alt="" />
+                <img src="assets/brow/brow_01.svg" alt="" />
+                <img src="assets/brow/brow_02.svg" alt="" />
+                <img src="assets/brow/brow_03.svg" alt="" />
+                <img src="assets/nose/nose_01.svg" alt="" />
+                <img src="assets/nose/nose_02.svg" alt="" />
+                <img src="assets/mouth/mouth_01.svg" alt="" />
+                <img src="assets/mouth/mouth_02.svg" alt="" />
+                <img src="assets/mouth/mouth_03.svg" alt="" />
+                <img src="assets/hair/hair_01.svg" alt="" />
+                <img src="assets/hair/hair_02.svg" alt="" />
+                <img src="assets/acc/acc_01.svg" alt="" />
+              </div>
+              <div class="bg-marquee__pattern" aria-hidden="true">
+                <img src="assets/eye/eye_01.svg" alt="" />
+                <img src="assets/eye/eye_02.svg" alt="" />
+                <img src="assets/eye/eye_03.svg" alt="" />
+                <img src="assets/eye/eye_04.svg" alt="" />
+                <img src="assets/brow/brow_01.svg" alt="" />
+                <img src="assets/brow/brow_02.svg" alt="" />
+                <img src="assets/brow/brow_03.svg" alt="" />
+                <img src="assets/nose/nose_01.svg" alt="" />
+                <img src="assets/nose/nose_02.svg" alt="" />
+                <img src="assets/mouth/mouth_01.svg" alt="" />
+                <img src="assets/mouth/mouth_02.svg" alt="" />
+                <img src="assets/mouth/mouth_03.svg" alt="" />
+                <img src="assets/hair/hair_01.svg" alt="" />
+                <img src="assets/hair/hair_02.svg" alt="" />
+                <img src="assets/acc/acc_01.svg" alt="" />
+              </div>
+            </div>
+
+            <div class="bg-marquee__row bg-marquee__row--offset1">
+              <div class="bg-marquee__pattern">
+                <img src="assets/eye/eye_05.svg" alt="" />
+                <img src="assets/eye/eye_06.svg" alt="" />
+                <img src="assets/brow/brow_04.svg" alt="" />
+                <img src="assets/brow/brow_05.svg" alt="" />
+                <img src="assets/nose/nose_03.svg" alt="" />
+                <img src="assets/nose/nose_04.svg" alt="" />
+                <img src="assets/mouth/mouth_04.svg" alt="" />
+                <img src="assets/mouth/mouth_05.svg" alt="" />
+                <img src="assets/hair/hair_03.svg" alt="" />
+                <img src="assets/hair/hair_04.svg" alt="" />
+                <img src="assets/acc/acc_00.svg" alt="" />
+              </div>
+              <div class="bg-marquee__pattern" aria-hidden="true">
+                <img src="assets/eye/eye_05.svg" alt="" />
+                <img src="assets/eye/eye_06.svg" alt="" />
+                <img src="assets/brow/brow_04.svg" alt="" />
+                <img src="assets/brow/brow_05.svg" alt="" />
+                <img src="assets/nose/nose_03.svg" alt="" />
+                <img src="assets/nose/nose_04.svg" alt="" />
+                <img src="assets/mouth/mouth_04.svg" alt="" />
+                <img src="assets/mouth/mouth_05.svg" alt="" />
+                <img src="assets/hair/hair_03.svg" alt="" />
+                <img src="assets/hair/hair_04.svg" alt="" />
+                <img src="assets/acc/acc_00.svg" alt="" />
+              </div>
+            </div>
+
+            <div class="bg-marquee__row bg-marquee__row--offset2">
+              <div class="bg-marquee__pattern">
+                <img src="assets/eye/eye_07.svg" alt="" />
+                <img src="assets/brow/brow_06.svg" alt="" />
+                <img src="assets/brow/brow_07.svg" alt="" />
+                <img src="assets/nose/nose_05.svg" alt="" />
+                <img src="assets/nose/nose_06.svg" alt="" />
+                <img src="assets/mouth/mouth_06.svg" alt="" />
+                <img src="assets/mouth/mouth_07.svg" alt="" />
+                <img src="assets/hair/hair_05.svg" alt="" />
+                <img src="assets/hair/hair_06.svg" alt="" />
+                <img src="assets/hair/hair_07.svg" alt="" />
+              </div>
+              <div class="bg-marquee__pattern" aria-hidden="true">
+                <img src="assets/eye/eye_07.svg" alt="" />
+                <img src="assets/brow/brow_06.svg" alt="" />
+                <img src="assets/brow/brow_07.svg" alt="" />
+                <img src="assets/nose/nose_05.svg" alt="" />
+                <img src="assets/nose/nose_06.svg" alt="" />
+                <img src="assets/mouth/mouth_06.svg" alt="" />
+                <img src="assets/mouth/mouth_07.svg" alt="" />
+                <img src="assets/hair/hair_05.svg" alt="" />
+                <img src="assets/hair/hair_06.svg" alt="" />
+                <img src="assets/hair/hair_07.svg" alt="" />
+              </div>
+            </div>
+
           </div>
+
         </div>
       </div>
 
@@ -75,7 +247,7 @@
       </div>
     </section>
 
-    <div id="makerScreen" class="main-content is-hidden">
+    <div id="makerScreen" class="main-content screen is-hidden">
 
       <!-- プレビューエリア -->
       <div class="preview-wrap">
