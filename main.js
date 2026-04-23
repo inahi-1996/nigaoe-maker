@@ -2,10 +2,13 @@
 
 // =====================
 // パーツ定義
+// 顔タイプを増やす場合は face 配列に追加するだけ
+// タブに出す場合は index.html の .tabs にボタンを追加
 // =====================
 const PARTS = {
   face: [
     { id: "face_01", label: "卵型", src: "assets/face/face_01.svg" },
+    // 顔タイプが増えたらここに追加
   ],
   eyes: [
     { id: "eye_01", label: "細目",     src: "assets/eye/eye_01.svg" },
@@ -58,8 +61,10 @@ const PARTS = {
     { id: "hair_09", label: "hair_09", src: "assets/hair/hair_09.svg" },
     { id: "hair_00", label: "なし",     src: "" },
   ],
+
 }
 
+// レイヤー描画順（face が常に最下層）
 const LAYER_ORDER = ["face", "nose", "mouth", "eyes", "eyebrows", "hair"]
 
 // =====================
@@ -67,6 +72,7 @@ const LAYER_ORDER = ["face", "nose", "mouth", "eyes", "eyebrows", "hair"]
 // =====================
 const state = {
   currentCat: "eyes",
+  lineColor: "#2FAF5B",
   selected: {
     face:      0,
     eyes:      0,
@@ -86,9 +92,12 @@ const partGrid = document.getElementById("partGrid")
 const tabs     = [...document.querySelectorAll(".chip")]
 const btnDone  = document.getElementById("btnDone")
 const toast    = document.getElementById("toast")
+const partScroll = document.querySelector(".part-scroll")
+const colorPanel = document.getElementById("colorPanel")
+const paletteDots = [...document.querySelectorAll(".palette__dot")]
 
 const CANVAS_SIZE = 500
-const CANVAS_PADDING = 48
+const CANVAS_PADDING = 48  // イラスト描画の余白
 canvas.width  = CANVAS_SIZE
 canvas.height = CANVAS_SIZE
 
@@ -111,7 +120,9 @@ function loadImage(src) {
 // Canvas 描画
 // =====================
 async function renderCanvas() {
-  ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+  // 書き出しPNGの背景が透過にならないよう、毎回白で塗りつぶす
+  ctx.fillStyle = "#FFFFFF"
+  ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
   for (const cat of LAYER_ORDER) {
     const idx  = state.selected[cat]
     const part = PARTS[cat]?.[idx]
@@ -119,6 +130,46 @@ async function renderCanvas() {
     const img = await loadImage(part.src)
     if (img) ctx.drawImage(img, CANVAS_PADDING, CANVAS_PADDING, CANVAS_SIZE - CANVAS_PADDING * 2, CANVAS_SIZE - CANVAS_PADDING * 2)
   }
+  // 黒部分のみ、ユーザー選択カラーに変換（白はそのまま）
+  replaceBlackWithColor(ctx, CANVAS_SIZE, CANVAS_SIZE, state.lineColor)
+}
+
+function hexToRgb(hex) {
+  const h = hex.replace("#", "").trim()
+  const n = parseInt(h, 16)
+  return {
+    r: (n >> 16) & 255,
+    g: (n >> 8) & 255,
+    b: n & 255,
+  }
+}
+
+function replaceBlackWithColor(ctx, w, h, hexColor) {
+  const { r: tr, g: tg, b: tb } = hexToRgb(hexColor)
+  const img = ctx.getImageData(0, 0, w, h)
+  const d = img.data
+
+  // 真っ黒以外（アンチエイリアスの濃いグレー）も拾うためのしきい値
+  // 置換しすぎる場合は小さく（例: 60）、置換されない場合は大きく（例: 100）
+  const TH = 80
+
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i]
+    const g = d[i + 1]
+    const b = d[i + 2]
+    const a = d[i + 3]
+    if (a === 0) continue
+    // 白はそのまま（要件）
+    if (r > 240 && g > 240 && b > 240) continue
+    // 黒っぽいピクセルだけ置換（αは保持）
+    if (r < TH && g < TH && b < TH) {
+      d[i]     = tr
+      d[i + 1] = tg
+      d[i + 2] = tb
+      d[i + 3] = a
+    }
+  }
+  ctx.putImageData(img, 0, 0)
 }
 
 // =====================
@@ -126,6 +177,13 @@ async function renderCanvas() {
 // =====================
 function renderGrid() {
   const cat   = state.currentCat
+  if (cat === "color") {
+    if (partScroll) partScroll.style.display = "none"
+    if (colorPanel) colorPanel.hidden = false
+    return
+  }
+  if (partScroll) partScroll.style.display = ""
+  if (colorPanel) colorPanel.hidden = true
   const parts = PARTS[cat] ?? []
   partGrid.innerHTML = ""
   parts.forEach((part, idx) => {
@@ -137,12 +195,14 @@ function renderGrid() {
       img.alt = part.label
       thumb.appendChild(img)
     }
+    // 「なし」ラベル表示
     if (!part.src) {
       const label = document.createElement("span")
       label.className = "part-thumb__label"
       label.textContent = "なし"
       thumb.appendChild(label)
     }
+
     const check = document.createElement("div")
     check.className = "part-thumb__check"
     thumb.appendChild(check)
@@ -163,6 +223,18 @@ tabs.forEach(tab => {
     state.currentCat = tab.dataset.cat
     tabs.forEach(t => t.classList.toggle("is-active", t === tab))
     renderGrid()
+  })
+})
+
+// =====================
+// カラーパレット
+// WithMeの背景色パレットと同じUI・同じ色
+// =====================
+paletteDots.forEach(dot => {
+  dot.addEventListener("click", () => {
+    state.lineColor = dot.dataset.color
+    paletteDots.forEach(d => d.classList.toggle("is-selected", d === dot))
+    renderCanvas()
   })
 })
 
@@ -197,18 +269,6 @@ function showToast(text) {
     setTimeout(() => (toast.hidden = true), 250)
   }, 1600)
 }
-
-// =====================
-// ローディングオーバーレイを非表示にする
-// =====================
-window.addEventListener('load', () => {
-  const overlay = document.getElementById('loading-overlay')
-  if (!overlay) return
-  overlay.classList.add('hidden')
-  overlay.addEventListener('transitionend', () => {
-    overlay.remove()
-  })
-})
 
 // =====================
 // 起動

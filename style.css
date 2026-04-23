@@ -16,51 +16,6 @@ body {
   min-height: 100vh;
 }
 
-/* =============================
-   ローディングオーバーレイ
-   ============================= */
-#loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  transition: opacity 0.3s ease;
-}
-
-#loading-overlay.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* ローダー本体（円→四角→三角） */
-.loader {
-  width: 40px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #23B470;
-  clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
-  animation: l1 2s infinite cubic-bezier(0.3,1,0,1);
-}
-
-@keyframes l1 {
-  33% {
-    border-radius: 0;
-    background: #91DAB8;
-    clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
-  }
-  66% {
-    border-radius: 0;
-    background: #ced9d4;
-    clip-path: polygon(50% 0,50% 0,100% 100%,0 100%);
-  }
-}
-
-/* =============================
-   アプリ本体
-   ============================= */
 #app {
   max-width: 420px;
   margin: 0 auto;
@@ -154,6 +109,49 @@ body {
   flex: 1;
   overflow-y: auto;
 }
+.color-panel{
+  flex: 1;
+  padding: 8px 16px 24px;
+}
+.palette{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.palette__dot{
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  border: 1px solid #CED9D4;
+  background: var(--c);
+  cursor: pointer;
+  position: relative;
+}
+.palette__dot.is-selected{
+  outline: 3px solid #23B470;
+  outline-offset: 2px;
+}
+.palette__dot.is-selected::after{
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #23B470;
+}
+.palette__dot.is-selected::before{
+  content: "check";
+  font-family: "Material Symbols Outlined";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 11px;
+  line-height: 1;
+  color: #fff;
+  z-index: 1;
+}
 .part-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -164,6 +162,7 @@ body {
   aspect-ratio: 1 / 1;
   background: #fff;
   border-radius: var(--radius-thumb);
+  border: 2.5px solid transparent;
   cursor: pointer;
   overflow: hidden;
   position: relative;
@@ -203,6 +202,8 @@ body {
   border-left: none;
   transform: rotate(45deg) translate(-1px, -1px);
 }
+
+/* 「なし」ラベル */
 .part-thumb__label {
   position: absolute;
   inset: 0;
@@ -222,16 +223,21 @@ body {
   overflow: hidden;
 }
 .right-panel {
-  display: contents;
+  display: contents; /* 通常時は透過 */
 }
 
 @media (min-width: 680px) {
-  #app { max-width: 100%; }
-  .header { padding: 16px 28px 12px; }
+  #app {
+    max-width: 100%;
+  }
+  .header {
+    padding: 16px 28px 12px;
+  }
   .main-content {
     flex-direction: row;
     overflow: hidden;
   }
+  /* プレビュー左パネル：縦全体に伸び、キャンバスは正方形を維持 */
   .preview-wrap {
     flex-shrink: 0;
     width: auto;
@@ -249,6 +255,7 @@ body {
     aspect-ratio: 1 / 1;
     max-height: calc(100vh - 56px);
   }
+  /* 右パネル：残り幅を全部使い、高さも届かせる */
   .right-panel {
     display: flex;
     flex-direction: column;
@@ -256,7 +263,9 @@ body {
     overflow: hidden;
     min-width: 0;
   }
-  .part-scroll { flex: 1; }
+  .part-scroll {
+    flex: 1;
+  }
 }
 
 /* トースト */

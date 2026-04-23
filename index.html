@@ -11,18 +11,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
 </head>
 <body>
-
-  <!-- ローディングオーバーレイ -->
-  <div id="loading-overlay">
-    <div class="loader"></div>
-  </div>
-
   <div id="app">
 
     <!-- ヘッダー -->
     <header class="header">
       <span class="header__title">似顔絵メーカー</span>
-      <span class="header__credit">Made with ♡ <a href="https://hi-ki-illustration.notion.site" target="_blank" style="color:#23B470; text-decoration:underline; font-weight:700;">@hi_ki_illustration<span class="material-symbols-outlined" style="font-size:14px; vertical-align:middle; margin-left:2px;">open_in_new</span></a></span>
+      <span class="header__credit">Made with ♡ <a href="https://stone-pocket-ebe.notion.site/3480154fff5780818cbaf1af649b4906?source=copy_link" target="_blank" style="color:#23B470; text-decoration:underline; font-weight:700;">@hi_ki_illustration<span class="material-symbols-outlined" style="font-size:14px; vertical-align:middle; margin-left:2px;">open_in_new</span></a></span>
     </header>
 
     <div class="main-content">
@@ -36,18 +30,32 @@
       <!-- 右パネル（タブ＋グリッド） -->
       <div class="right-panel">
 
-        <!-- カテゴリタブ -->
+        <!-- カテゴリタブ（顔タイプは構成が複数になったら追加） -->
         <div class="tabs" role="group" aria-label="パーツカテゴリ">
           <button class="chip is-active" data-cat="eyes">目</button>
           <button class="chip" data-cat="eyebrows">眉毛</button>
           <button class="chip" data-cat="nose">鼻</button>
           <button class="chip" data-cat="mouth">口</button>
           <button class="chip" data-cat="hair">髪</button>
+          <button class="chip" data-cat="color">カラー</button>
         </div>
 
         <!-- パーツ選択グリッド -->
         <div class="part-scroll">
           <div id="partGrid" class="part-grid"></div>
+        </div>
+        <!-- カラー選択（WithMeの背景色パレットと同じUI） -->
+        <div id="colorPanel" class="color-panel" hidden>
+          <div class="palette" role="group" aria-label="カラー選択">
+            <button class="palette__dot" data-color="#EC74A9" aria-label="ピンク" style="--c:#EC74A9"></button>
+            <button class="palette__dot" data-color="#F5E927" aria-label="イエロー" style="--c:#F5E927"></button>
+            <button class="palette__dot" data-color="#EF7F1A" aria-label="オレンジ" style="--c:#EF7F1A"></button>
+            <button class="palette__dot is-selected" data-color="#2FAF5B" aria-label="グリーン（デフォルト）" style="--c:#2FAF5B"></button>
+            <button class="palette__dot" data-color="#32479B" aria-label="ネイビー" style="--c:#32479B"></button>
+            <button class="palette__dot" data-color="#ECB08D" aria-label="ベージュ" style="--c:#ECB08D"></button>
+            <button class="palette__dot" data-color="#FFEBFE" aria-label="ラベンダー" style="--c:#FFEBFE"></button>
+            <button class="palette__dot" data-color="#FFFFFF" aria-label="ホワイト" style="--c:#FFFFFF"></button>
+          </div>
         </div>
 
       </div>
