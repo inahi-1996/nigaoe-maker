@@ -96,8 +96,11 @@ const partScroll = document.querySelector(".part-scroll")
 const colorPanel = document.getElementById("colorPanel")
 const paletteDots = [...document.querySelectorAll(".palette__dot")]
 
-const CANVAS_SIZE = 500
-const CANVAS_PADDING = 48  // イラスト描画の余白
+// できるだけジャギを減らすため、内部は高解像度で描画してから縮小表示する
+const DISPLAY_SIZE = 500
+const RENDER_SCALE = 2
+const CANVAS_SIZE = DISPLAY_SIZE * RENDER_SCALE
+const CANVAS_PADDING = 48 * RENDER_SCALE  // イラスト描画の余白（拡大に追従）
 canvas.width  = CANVAS_SIZE
 canvas.height = CANVAS_SIZE
 
@@ -151,7 +154,7 @@ function replaceBlackWithColor(ctx, w, h, hexColor) {
 
   // アンチエイリアスでできるグレーも含めて「暗い色」を置換する（白はそのまま）
   // 置換しすぎる場合は小さく（例: 140）、置換されない場合は大きく（例: 190）
-  const TH_LUM = 200
+  const TH_LUM = 170
 
   for (let i = 0; i < d.length; i += 4) {
     const r = d[i]
@@ -248,7 +251,21 @@ paletteDots.forEach(dot => {
 // =====================
 btnDone.addEventListener("click", async () => {
   await renderCanvas()
-  canvas.toBlob(blob => {
+
+  // 高解像度キャンバスを、書き出し用サイズ（DISPLAY_SIZE）に縮小して保存
+  const out = document.createElement("canvas")
+  out.width = DISPLAY_SIZE
+  out.height = DISPLAY_SIZE
+  const octx = out.getContext("2d")
+
+  // 背景白
+  octx.fillStyle = "#FFFFFF"
+  octx.fillRect(0, 0, DISPLAY_SIZE, DISPLAY_SIZE)
+
+  // 高解像度→縮小描画
+  octx.drawImage(canvas, 0, 0, DISPLAY_SIZE, DISPLAY_SIZE)
+
+  out.toBlob(blob => {
     if (!blob) return
     const url = URL.createObjectURL(blob)
     const a   = document.createElement("a")
