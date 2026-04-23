@@ -269,12 +269,21 @@ paletteDots.forEach(dot => {
 })
 
 // =====================
-// 完成ボタン（PNG保存）
+// 共有ボタン（iOS/Androidの共有シート）
 // =====================
+function pad2(n) { return String(n).padStart(2, "0") }
+function makeFileName() {
+  const d = new Date()
+  const yy = String(d.getFullYear()).slice(-2)
+  const mm = pad2(d.getMonth() + 1)
+  const dd = pad2(d.getDate())
+  return `nm_${yy}${mm}${dd}.png`
+}
+
 btnDone.addEventListener("click", async () => {
   await renderCanvas()
 
-  // 高解像度キャンバスを、書き出し用サイズ（DISPLAY_SIZE）に縮小して保存
+  // 高解像度キャンバスを、書き出し用サイズ（DISPLAY_SIZE）に縮小して共有/保存
   const out = document.createElement("canvas")
   out.width = DISPLAY_SIZE
   out.height = DISPLAY_SIZE
@@ -287,12 +296,27 @@ btnDone.addEventListener("click", async () => {
   // 高解像度→縮小描画
   octx.drawImage(canvas, 0, 0, DISPLAY_SIZE, DISPLAY_SIZE)
 
-  out.toBlob(blob => {
+  out.toBlob(async (blob) => {
     if (!blob) return
+    const fileName = makeFileName()
+
+    // 共有シート（対応端末）
+    try {
+      const file = new File([blob], fileName, { type: "image/png" })
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: "似顔絵メーカー" })
+        showToast("共有を開きました")
+        return
+      }
+    } catch (e) {
+      // キャンセル等は何もしない
+    }
+
+    // fallback: ダウンロード
     const url = URL.createObjectURL(blob)
     const a   = document.createElement("a")
     a.href     = url
-    a.download = "my-avatar.png"
+    a.download = fileName
     document.body.appendChild(a)
     a.click()
     a.remove()
