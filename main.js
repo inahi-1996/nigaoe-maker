@@ -374,5 +374,6 @@ if (btnHome) {
 // =====================
 // 起動
 // =====================
+if (headerEl) headerEl.classList.add("is-hidden")
 renderGrid()
 renderCanvas()

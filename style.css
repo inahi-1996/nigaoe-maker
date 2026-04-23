@@ -265,9 +265,10 @@ body {
   padding: 24px 20px;
   background: #E4F6ED;
   position: relative;
+  min-height: 100dvh;
 }
 .top-footer{
-  position: fixed;
+  position: absolute;
   right: 14px;
   bottom: calc(12px + env(safe-area-inset-bottom));
   font-size: 12px;
