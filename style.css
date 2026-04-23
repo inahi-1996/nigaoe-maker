@@ -75,6 +75,9 @@ body {
   justify-content: space-between;
   padding: 16px 20px 12px;
 }
+.header.is-hidden{
+  display: none;
+}
 .header__title {
   font-size: 18px;
   font-weight: 900;
@@ -260,6 +263,17 @@ body {
   align-items: center;
   justify-content: center;
   padding: 24px 20px;
+  background: #E4F6ED;
+  position: relative;
+}
+.top-footer{
+  position: fixed;
+  right: 14px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  font-size: 12px;
+  color: #888;
+  font-weight: 700;
+  z-index: 50;
 }
 .top__inner{
   width: 100%;
