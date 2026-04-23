@@ -149,9 +149,9 @@ function replaceBlackWithColor(ctx, w, h, hexColor) {
   const img = ctx.getImageData(0, 0, w, h)
   const d = img.data
 
-  // 真っ黒以外（アンチエイリアスの濃いグレー）も拾うためのしきい値
-  // 置換しすぎる場合は小さく（例: 60）、置換されない場合は大きく（例: 100）
-  const TH = 80
+  // アンチエイリアスでできるグレーも含めて「暗い色」を置換する（白はそのまま）
+  // 置換しすぎる場合は小さく（例: 140）、置換されない場合は大きく（例: 190）
+  const TH_LUM = 170
 
   for (let i = 0; i < d.length; i += 4) {
     const r = d[i]
@@ -159,10 +159,15 @@ function replaceBlackWithColor(ctx, w, h, hexColor) {
     const b = d[i + 2]
     const a = d[i + 3]
     if (a === 0) continue
+
     // 白はそのまま（要件）
     if (r > 240 && g > 240 && b > 240) continue
-    // 黒っぽいピクセルだけ置換（αは保持）
-    if (r < TH && g < TH && b < TH) {
+
+    // 見た目の明るさ（相対輝度）で判定
+    const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+    // 暗いピクセルだけ置換（αは保持）
+    if (lum < TH_LUM) {
       d[i]     = tr
       d[i + 1] = tg
       d[i + 2] = tb
