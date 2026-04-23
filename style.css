@@ -280,6 +280,43 @@ body {
   width: 100%;
   max-width: 420px;
   text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* 背景：assetsパーツの横スクロール */
+.bg-marquee{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.14;
+  z-index: 0;
+}
+.bg-marquee__track{
+  display: flex;
+  width: max-content;
+  height: 100%;
+  align-items: center;
+  animation: bgScrollX 26s linear infinite;
+}
+.bg-marquee__pattern{
+  display: flex;
+  gap: 22px;
+  padding: 0 22px;
+  align-items: center;
+}
+.bg-marquee__pattern img{
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+@keyframes bgScrollX{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce){
+  .bg-marquee__track{ animation: none; }
 }
 .top__logo{
   display: grid;
