@@ -156,13 +156,13 @@ body {
   padding: 8px 16px 24px;
 }
 .palette{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 12px;
 }
 .palette__dot{
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: 40px;
+  height: 40px;
   border-radius: 999px;
   border: 1px solid #CED9D4;
   background: var(--c);
