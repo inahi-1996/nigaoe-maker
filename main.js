@@ -95,6 +95,7 @@ const toast    = document.getElementById("toast")
 const partScroll = document.querySelector(".part-scroll")
 const colorPanel = document.getElementById("colorPanel")
 const paletteDots = [...document.querySelectorAll(".palette__dot")]
+const loadingOverlay = document.getElementById("loading-overlay")
 
 // できるだけジャギを減らすため、内部は高解像度で描画してから縮小表示する
 const DISPLAY_SIZE = 500
@@ -103,6 +104,14 @@ const CANVAS_SIZE = DISPLAY_SIZE * RENDER_SCALE
 const CANVAS_PADDING = 48 * RENDER_SCALE  // イラスト描画の余白（拡大に追従）
 canvas.width  = CANVAS_SIZE
 canvas.height = CANVAS_SIZE
+
+// =====================
+// Loading overlay（WithMeと同じ）
+// =====================
+function setLoading(isLoading) {
+  if (!loadingOverlay) return
+  loadingOverlay.classList.toggle("hidden", !isLoading)
+}
 
 // =====================
 // 画像読み込みキャッシュ
@@ -123,19 +132,32 @@ function loadImage(src) {
 // Canvas 描画
 // =====================
 async function renderCanvas() {
-  // 書き出しPNGの背景が透過にならないよう、毎回白で塗りつぶす
-  ctx.fillStyle = "#FFFFFF"
-  ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
-  for (const cat of LAYER_ORDER) {
-    const idx  = state.selected[cat]
-    const part = PARTS[cat]?.[idx]
-    if (!part || !part.src) continue
-    const img = await loadImage(part.src)
-    if (img) ctx.drawImage(img, CANVAS_PADDING, CANVAS_PADDING, CANVAS_SIZE - CANVAS_PADDING * 2, CANVAS_SIZE - CANVAS_PADDING * 2)
+  const token = ++renderToken
+  setLoading(true)
+  // loading表示を先に反映
+  await new Promise(requestAnimationFrame)
+
+  try {
+    // 書き出しPNGの背景が透過にならないよう、毎回白で塗りつぶす
+    ctx.fillStyle = "#FFFFFF"
+    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+    for (const cat of LAYER_ORDER) {
+      if (token !== renderToken) return
+      const idx  = state.selected[cat]
+      const part = PARTS[cat]?.[idx]
+      if (!part || !part.src) continue
+      const img = await loadImage(part.src)
+      if (token !== renderToken) return
+      if (img) ctx.drawImage(img, CANVAS_PADDING, CANVAS_PADDING, CANVAS_SIZE - CANVAS_PADDING * 2, CANVAS_SIZE - CANVAS_PADDING * 2)
+    }
+    if (token !== renderToken) return
+    // 黒部分のみ、ユーザー選択カラーに変換（白はそのまま）
+    replaceBlackWithColor(ctx, CANVAS_SIZE, CANVAS_SIZE, state.lineColor)
+  } finally {
+    if (token === renderToken) setLoading(false)
   }
-  // 黒部分のみ、ユーザー選択カラーに変換（白はそのまま）
-  replaceBlackWithColor(ctx, CANVAS_SIZE, CANVAS_SIZE, state.lineColor)
 }
+let renderToken = 0
 
 function hexToRgb(hex) {
   const h = hex.replace("#", "").trim()

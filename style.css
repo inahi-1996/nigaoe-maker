@@ -16,6 +16,48 @@ body {
   min-height: 100vh;
 }
 
+/* =============================
+   ローディングオーバーレイ（WithMeと同じ）
+   ============================= */
+#loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.2s ease;
+}
+
+#loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ローダー本体（円→四角→三角） */
+.loader {
+  width: 40px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #23B470;
+  clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+  animation: l1 2s infinite cubic-bezier(0.3,1,0,1);
+}
+
+@keyframes l1 {
+  33% {
+    border-radius: 0;
+    background: #91DAB8;
+    clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+  }
+  66% {
+    border-radius: 0;
+    background: #ced9d4;
+    clip-path: polygon(50% 0,50% 0,100% 100%,0 100%);
+  }
+}
+
 #app {
   max-width: 420px;
   margin: 0 auto;
