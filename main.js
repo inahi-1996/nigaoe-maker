@@ -151,7 +151,7 @@ function replaceBlackWithColor(ctx, w, h, hexColor) {
 
   // アンチエイリアスでできるグレーも含めて「暗い色」を置換する（白はそのまま）
   // 置換しすぎる場合は小さく（例: 140）、置換されない場合は大きく（例: 190）
-  const TH_LUM = 170
+  const TH_LUM = 190
 
   for (let i = 0; i < d.length; i += 4) {
     const r = d[i]
