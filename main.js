@@ -310,6 +310,7 @@ btnDone.addEventListener("click", async () => {
     const fileName = makeFileName()
 
     // 共有シート（対応端末）
+    // NOTE: share を試した場合は、キャンセル含めて fallback ダウンロードはしない（勝手に保存されるのを防ぐ）
     try {
       const file = new File([blob], fileName, { type: "image/png" })
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -322,11 +323,11 @@ btnDone.addEventListener("click", async () => {
         return
       }
     } catch (e) {
-      // キャンセル（共有シートを閉じた）場合は何もしない
-      if (e && (e.name === "AbortError" || e.message === "AbortError")) return
+      // キャンセル（共有シートを閉じた）含め、share を試した時点で何もしない
+      return
     }
 
-    // fallback: ダウンロード
+    // fallback: ダウンロード（share がそもそも使えない端末のみ）
     const url = URL.createObjectURL(blob)
     const a   = document.createElement("a")
     a.href     = url
@@ -335,7 +336,7 @@ btnDone.addEventListener("click", async () => {
     a.click()
     a.remove()
     setTimeout(() => URL.revokeObjectURL(url), 1000)
-    showToast("画像を保存しました")
+    // NOTE: ダウンロードのキャンセル判定ができないため、トーストは表示しない
   }, "image/png")
 })
 
