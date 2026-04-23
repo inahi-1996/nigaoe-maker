@@ -305,7 +305,6 @@ btnDone.addEventListener("click", async () => {
       const file = new File([blob], fileName, { type: "image/png" })
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({ files: [file], title: "似顔絵メーカー" })
-        showToast("共有を開きました")
         return
       }
     } catch (e) {
