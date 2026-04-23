@@ -322,7 +322,8 @@ btnDone.addEventListener("click", async () => {
         return
       }
     } catch (e) {
-      // キャンセル等は何もしない
+      // キャンセル（共有シートを閉じた）場合は何もしない
+      if (e && (e.name === "AbortError" || e.message === "AbortError")) return
     }
 
     // fallback: ダウンロード
