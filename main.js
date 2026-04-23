@@ -72,7 +72,7 @@ const LAYER_ORDER = ["face", "nose", "mouth", "eyes", "eyebrows", "hair"]
 // =====================
 const state = {
   currentCat: "eyes",
-  lineColor: "#333333",
+  lineColor: "#000000",
   selected: {
     face:      0,
     eyes:      0,
