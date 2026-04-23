@@ -98,7 +98,7 @@ const paletteDots = [...document.querySelectorAll(".palette__dot")]
 
 // できるだけジャギを減らすため、内部は高解像度で描画してから縮小表示する
 const DISPLAY_SIZE = 500
-const RENDER_SCALE = 2
+const RENDER_SCALE = 3
 const CANVAS_SIZE = DISPLAY_SIZE * RENDER_SCALE
 const CANVAS_PADDING = 48 * RENDER_SCALE  // イラスト描画の余白（拡大に追従）
 canvas.width  = CANVAS_SIZE
