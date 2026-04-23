@@ -80,6 +80,10 @@ body {
   font-weight: 900;
   font-family: var(--font);
   color: #23B470;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 .header__credit {
   font-size: 12px;
@@ -249,11 +253,77 @@ body {
 }
 
 /* ワイドレイアウト */
+/* TOP（最初の注意書き） */
+.top{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+}
+.top__inner{
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+.top__logo{
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+}
+.logo-img{
+  display: block;
+  height: auto;
+}
+.logo-img--top{
+  width: min(220px, 70vw);
+}
+.logo-img--header{
+  width: 140px;
+  max-width: 48vw;
+}
+.top__title{
+  font-size: 26px;
+  font-weight: 900;
+  color: #23B470;
+  margin-bottom: 10px;
+}
+.top__desc{
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+.top__cta{
+  width: 100%;
+  border: none;
+  background: #23B470;
+  color: #fff;
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 18px;
+  padding: 14px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(35,180,112,0.25);
+}
+.top__note{
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #888;
+  line-height: 1.6;
+}
+
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+.main-content.is-hidden{
+  display: none;
 }
 .right-panel {
   display: contents; /* 通常時は透過 */
