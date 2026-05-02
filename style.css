@@ -260,7 +260,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 24px 20px;
-  background: #E4F6ED;
+  background: #ffffff;
   position: relative;
   min-height: 100dvh;
 }
@@ -290,14 +290,14 @@ body {
   opacity: 0.18;
   z-index: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 72px);
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
   gap: 12px;
   padding: 16px;
   align-content: start;
 }
 .bg-tile img {
-  width: 72px;
-  height: 72px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
 }
 .top__logo{
