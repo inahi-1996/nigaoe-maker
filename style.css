@@ -287,7 +287,6 @@ body {
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  opacity: 0.18;
   z-index: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
@@ -299,6 +298,10 @@ body {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: contain;
+  opacity: 0.18;
+}
+.bg-tile img.is-bright {
+  opacity: 0.30;
 }
 .top__logo{
   display: grid;
