@@ -411,6 +411,12 @@ body {
   display: contents;
 }
 
+@media (orientation: landscape) {
+  #app {
+    max-width: 100%;
+  }
+}
+
 @media (min-width: 680px) {
   #app {
     max-width: 100%;
