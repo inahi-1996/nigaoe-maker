@@ -311,6 +311,18 @@ btnDone.addEventListener("click", async () => {
 })
 
 // =====================
+// チュートリアルダイアログ
+// =====================
+const tutorialDialog = document.getElementById("tutorialDialog")
+const btnDialogOk    = document.getElementById("btnDialogOk")
+
+if (btnDialogOk) {
+  btnDialogOk.addEventListener("click", () => {
+    tutorialDialog.classList.add("hidden")
+  })
+}
+
+// =====================
 // トースト
 // =====================
 function showToast(text) {
@@ -350,6 +362,8 @@ if (btnStart) {
     hideScreen(topScreen)
     showScreen(makerScreen)
     if (headerEl) headerEl.classList.remove("is-hidden")
+    // チュートリアルダイアログを表示
+    if (tutorialDialog) tutorialDialog.classList.remove("hidden")
   })
 }
 

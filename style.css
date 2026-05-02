@@ -454,6 +454,57 @@ body {
   }
 }
 
+/* チュートリアルダイアログ */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+  transition: opacity 0.2s ease;
+}
+.dialog-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.dialog {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  width: 100%;
+  max-width: 340px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+.dialog__message {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.dialog__footer {
+  display: flex;
+  justify-content: flex-end;
+}
+.dialog__btn {
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 15px;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 10px 28px;
+  cursor: pointer;
+  transition: transform 120ms cubic-bezier(.2,0,0,1);
+}
+.dialog__btn:active {
+  transform: scale(0.97);
+}
+
 /* トースト */
 .toast {
   position: fixed;
