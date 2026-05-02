@@ -18,13 +18,13 @@ const PARTS = {
     { id: "eye_00", label: "なし",     src: "" },
   ],
   eyebrows: [
-    { id: "brow_01", label: "太山毛",     src: "assets/brow/brow_01.svg" },
-    { id: "brow_02", label: "細山毛",     src: "assets/brow/brow_02.svg" },
-    { id: "brow_03", label: "アーチ山毛", src: "assets/brow/brow_03.svg" },
-    { id: "brow_04", label: "下がり山毛", src: "assets/brow/brow_04.svg" },
-    { id: "brow_05", label: "上がり山毛", src: "assets/brow/brow_05.svg" },
-    { id: "brow_06", label: "短め山毛",   src: "assets/brow/brow_06.svg" },
-    { id: "brow_07", label: "一文字山毛", src: "assets/brow/brow_07.svg" },
+    { id: "brow_01", label: "太眉",     src: "assets/brow/brow_01.svg" },
+    { id: "brow_02", label: "細眉",     src: "assets/brow/brow_02.svg" },
+    { id: "brow_03", label: "アーチ眉", src: "assets/brow/brow_03.svg" },
+    { id: "brow_04", label: "下がり眉", src: "assets/brow/brow_04.svg" },
+    { id: "brow_05", label: "上がり眉", src: "assets/brow/brow_05.svg" },
+    { id: "brow_06", label: "短め眉",   src: "assets/brow/brow_06.svg" },
+    { id: "brow_07", label: "一文字眉", src: "assets/brow/brow_07.svg" },
     { id: "brow_00", label: "なし",     src: "" },
   ],
   nose: [
@@ -67,7 +67,7 @@ const PARTS = {
 // State
 // =====================
 const state = {
-  currentCat: "eyes",
+  currentCat: "hair",
   lineColor: "#000000",
   selected: {
     face:      0,
