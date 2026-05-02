@@ -2,13 +2,10 @@
 
 // =====================
 // パーツ定義
-// 顔タイプを増やす場合は face 配列に追加するだけ
-// タブに出す場合は index.html の .tabs にボタンを追加
 // =====================
 const PARTS = {
   face: [
     { id: "face_01", label: "卵型", src: "assets/face/face_01.svg" },
-    // 顔タイプが増えたらここに追加
   ],
   eyes: [
     { id: "eye_01", label: "細目",     src: "assets/eye/eye_01.svg" },
@@ -21,13 +18,13 @@ const PARTS = {
     { id: "eye_00", label: "なし",     src: "" },
   ],
   eyebrows: [
-    { id: "brow_01", label: "太眉",     src: "assets/brow/brow_01.svg" },
-    { id: "brow_02", label: "細眉",     src: "assets/brow/brow_02.svg" },
-    { id: "brow_03", label: "アーチ眉", src: "assets/brow/brow_03.svg" },
-    { id: "brow_04", label: "下がり眉", src: "assets/brow/brow_04.svg" },
-    { id: "brow_05", label: "上がり眉", src: "assets/brow/brow_05.svg" },
-    { id: "brow_06", label: "短め眉",   src: "assets/brow/brow_06.svg" },
-    { id: "brow_07", label: "一文字眉", src: "assets/brow/brow_07.svg" },
+    { id: "brow_01", label: "太山毛",     src: "assets/brow/brow_01.svg" },
+    { id: "brow_02", label: "細山毛",     src: "assets/brow/brow_02.svg" },
+    { id: "brow_03", label: "アーチ山毛", src: "assets/brow/brow_03.svg" },
+    { id: "brow_04", label: "下がり山毛", src: "assets/brow/brow_04.svg" },
+    { id: "brow_05", label: "上がり山毛", src: "assets/brow/brow_05.svg" },
+    { id: "brow_06", label: "短め山毛",   src: "assets/brow/brow_06.svg" },
+    { id: "brow_07", label: "一文字山毛", src: "assets/brow/brow_07.svg" },
     { id: "brow_00", label: "なし",     src: "" },
   ],
   nose: [
@@ -61,11 +58,10 @@ const PARTS = {
     { id: "hair_09", label: "hair_09", src: "assets/hair/hair_09.svg" },
     { id: "hair_00", label: "なし",     src: "" },
   ],
-
 }
 
-// レイヤー描画順（face が常に最下層）
-const LAYER_ORDER = ["face", "nose", "mouth", "eyes", "eyebrows", "hair"]
+// レイヤー描画順
+ const LAYER_ORDER = ["face", "nose", "mouth", "eyes", "eyebrows", "hair"]
 
 // =====================
 // State
@@ -97,25 +93,22 @@ const colorPanel = document.getElementById("colorPanel")
 const paletteDots = [...document.querySelectorAll(".palette__dot")]
 const loadingOverlay = document.getElementById("loading-overlay")
 
-// Header
 const headerEl = document.querySelector(".header")
 
-// TOP画面
 const topScreen   = document.getElementById("topScreen")
 const makerScreen = document.getElementById("makerScreen")
 const btnStart    = document.getElementById("btnStart")
 const btnHome     = document.getElementById("btnHome")
 
-// できるだけジャギを減らすため、内部は高解像度で描画してから縮小表示する
 const DISPLAY_SIZE = 500
 const RENDER_SCALE = 2
 const CANVAS_SIZE = DISPLAY_SIZE * RENDER_SCALE
-const CANVAS_PADDING = 48 * RENDER_SCALE  // イラスト描画の余白（拡大に追従）
+const CANVAS_PADDING = 48 * RENDER_SCALE
 canvas.width  = CANVAS_SIZE
 canvas.height = CANVAS_SIZE
 
 // =====================
-// Loading overlay（WithMeと同じ）
+// Loading overlay
 // =====================
 function setLoading(isLoading) {
   if (!loadingOverlay) return
@@ -143,11 +136,9 @@ function loadImage(src) {
 async function renderCanvas() {
   const token = ++renderToken
   setLoading(true)
-  // loading表示を先に反映
   await new Promise(requestAnimationFrame)
 
   try {
-    // 書き出しPNGの背景が透過にならないよう、毎回白で塗りつぶす
     ctx.fillStyle = "#FFFFFF"
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
     for (const cat of LAYER_ORDER) {
@@ -160,7 +151,6 @@ async function renderCanvas() {
       if (img) ctx.drawImage(img, CANVAS_PADDING, CANVAS_PADDING, CANVAS_SIZE - CANVAS_PADDING * 2, CANVAS_SIZE - CANVAS_PADDING * 2)
     }
     if (token !== renderToken) return
-    // 黒部分のみ、ユーザー選択カラーに変換（白はそのまま）
     replaceBlackWithColor(ctx, CANVAS_SIZE, CANVAS_SIZE, state.lineColor)
   } finally {
     if (token === renderToken) setLoading(false)
@@ -182,9 +172,6 @@ function replaceBlackWithColor(ctx, w, h, hexColor) {
   const { r: tr, g: tg, b: tb } = hexToRgb(hexColor)
   const img = ctx.getImageData(0, 0, w, h)
   const d = img.data
-
-  // アンチエイリアスでできるグレーも含めて「暗い色」を置換する（白はそのまま）
-  // 置換しすぎる場合は小さく（例: 140）、置換されない場合は大きく（例: 190）
   const TH_LUM = 170
 
   for (let i = 0; i < d.length; i += 4) {
@@ -193,14 +180,8 @@ function replaceBlackWithColor(ctx, w, h, hexColor) {
     const b = d[i + 2]
     const a = d[i + 3]
     if (a === 0) continue
-
-    // 白はそのまま（要件）
     if (r > 240 && g > 240 && b > 240) continue
-
-    // 見た目の明るさ（相対輝度）で判定
     const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b
-
-    // 暗いピクセルだけ置換（αは保持）
     if (lum < TH_LUM) {
       d[i]     = tr
       d[i + 1] = tg
@@ -234,7 +215,6 @@ function renderGrid() {
       img.alt = part.label
       thumb.appendChild(img)
     }
-    // 「なし」ラベル表示
     if (!part.src) {
       const label = document.createElement("span")
       label.className = "part-thumb__label"
@@ -267,7 +247,6 @@ tabs.forEach(tab => {
 
 // =====================
 // カラーパレット
-// WithMeの背景色パレットと同じUI・同じ色
 // =====================
 paletteDots.forEach(dot => {
   dot.addEventListener("click", () => {
@@ -278,7 +257,7 @@ paletteDots.forEach(dot => {
 })
 
 // =====================
-// 共有ボタン（iOS/Androidの共有シート）
+// 共有ボタン
 // =====================
 function pad2(n) { return String(n).padStart(2, "0") }
 function makeFileName() {
@@ -292,25 +271,19 @@ function makeFileName() {
 btnDone.addEventListener("click", async () => {
   await renderCanvas()
 
-  // 高解像度キャンバスを、書き出し用サイズ（DISPLAY_SIZE）に縮小して共有/保存
   const out = document.createElement("canvas")
   out.width = DISPLAY_SIZE
   out.height = DISPLAY_SIZE
   const octx = out.getContext("2d")
 
-  // 背景白
   octx.fillStyle = "#FFFFFF"
   octx.fillRect(0, 0, DISPLAY_SIZE, DISPLAY_SIZE)
-
-  // 高解像度→縮小描画
   octx.drawImage(canvas, 0, 0, DISPLAY_SIZE, DISPLAY_SIZE)
 
   out.toBlob(async (blob) => {
     if (!blob) return
     const fileName = makeFileName()
 
-    // 共有シート（対応端末）
-    // NOTE: share を試した場合は、キャンセル含めて fallback ダウンロードはしない（勝手に保存されるのを防ぐ）
     try {
       const file = new File([blob], fileName, { type: "image/png" })
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -323,11 +296,9 @@ btnDone.addEventListener("click", async () => {
         return
       }
     } catch (e) {
-      // キャンセル（共有シートを閉じた）含め、share を試した時点で何もしない
       return
     }
 
-    // fallback: ダウンロード（share がそもそも使えない端末のみ）
     const url = URL.createObjectURL(blob)
     const a   = document.createElement("a")
     a.href     = url
@@ -336,7 +307,6 @@ btnDone.addEventListener("click", async () => {
     a.click()
     a.remove()
     setTimeout(() => URL.revokeObjectURL(url), 1000)
-    // NOTE: ダウンロードのキャンセル判定ができないため、トーストは表示しない
   }, "image/png")
 })
 
@@ -360,18 +330,15 @@ const SCREEN_TRANSITION_MS = 360
 
 function showScreen(el) {
   if (!el) return
-  // display:none 相当を解除してからアニメ開始
   el.style.display = ""
   el.classList.remove("is-hidden")
   el.classList.add("is-visible")
 }
 function hideScreen(el) {
   if (!el) return
-  // 先にアニメ（opacity/scale）させてから display:none 相当でレイアウトから外す
   el.classList.remove("is-visible")
   el.classList.add("is-hidden")
   window.setTimeout(() => {
-    // まだ hidden のままなら本当に隠す（途中で戻った場合に消えないように）
     if (el.classList.contains("is-hidden")) {
       el.style.display = "none"
     }
@@ -386,7 +353,6 @@ if (btnStart) {
   })
 }
 
-// Maker -> TOP（ヘッダーロゴ）
 if (btnHome) {
   btnHome.addEventListener("click", () => {
     hideScreen(makerScreen)

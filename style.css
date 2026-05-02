@@ -35,7 +35,6 @@ body {
   pointer-events: none;
 }
 
-/* ローダー本体（円→四角→三角） */
 .loader {
   width: 40px;
   aspect-ratio: 1;
@@ -62,7 +61,7 @@ body {
   max-width: 420px;
   margin: 0 auto;
   min-height: 100vh;
-  height: 100dvh; /* iOSのアドレスバー分で切れないように */
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -101,13 +100,12 @@ body {
   background: #E4F6ED;
   border-radius: 0;
   width: 100%;
-  aspect-ratio: 1 / 1;
-  max-height: min(52vh, 360px); /* 下の選択UIが潰れないよう上限 */
   padding: 12px;
 }
 .preview {
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
   display: block;
   background: #ffffff;
   border-radius: 16px;
@@ -255,8 +253,7 @@ body {
   color: #aaa;
 }
 
-/* ワイドレイアウト */
-/* TOP（最初の注意書き） */
+/* TOP */
 .top{
   flex: 1;
   display: flex;
@@ -284,7 +281,7 @@ body {
   z-index: 1;
 }
 
-/* 背景：assetsパーツを複数行でスクロール（左上→左下っぽい斜め下方向） */
+/* 背景パーツスクロール */
 .bg-marquee{
   position: absolute;
   inset: 0;
@@ -301,7 +298,6 @@ body {
   gap: 22px;
   justify-content: flex-start;
   padding: 18px 0;
-  /* 2グループ分を確実に画面より大きくして、下側が空かないようにする */
   min-height: 200%;
   animation: bgScrollDiagLoop 18s linear infinite;
   will-change: transform;
@@ -310,7 +306,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 22px;
-  /* グループが潰れて下側が薄くならないように */
   flex: 0 0 auto;
 }
 .bg-marquee__row{
@@ -333,7 +328,6 @@ body {
   object-fit: contain;
 }
 
-/* 画面左上→左下方向の流れ感を出すため、Xは少し・Yをしっかり動かす */
 @keyframes bgScrollDiagLoop{
   from { transform: translate(0, 0); }
   to   { transform: translate(-20%, -50%); }
@@ -370,7 +364,7 @@ body {
   line-height: 1.7;
   margin-bottom: 18px;
 }
-/* 画面遷移（MD3風：軽いズーム＋フェード） */
+/* 画面遷移 */
 .screen{
   transition:
     opacity 220ms cubic-bezier(.2,0,0,1),
@@ -388,7 +382,7 @@ body {
   pointer-events: auto;
 }
 
-/* ボタン押下（リップルなし、MD3っぽく沈む） */
+/* ボタン押下 */
 .top__cta{
   width: 100%;
   border: none;
@@ -427,7 +421,7 @@ body {
   display: none;
 }
 .right-panel {
-  display: contents; /* 通常時は透過 */
+  display: contents;
 }
 
 @media (min-width: 680px) {
@@ -447,6 +441,7 @@ body {
     width: auto;
     aspect-ratio: unset;
     align-self: stretch;
+    max-height: none;
     margin: 0;
     display: flex;
     align-items: center;
