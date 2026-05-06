@@ -338,12 +338,6 @@ body {
   width: 140px;
   max-width: 48vw;
 }
-.top__title{
-  font-size: 26px;
-  font-weight: 900;
-  color: #23B470;
-  margin-bottom: 10px;
-}
 .top__desc{
   font-size: 15px;
   font-weight: 700;
@@ -389,13 +383,6 @@ body {
 .top__cta:active{
   transform: scale(0.985);
   box-shadow: 0 6px 16px rgba(35,180,112,0.18);
-}
-.top__note{
-  margin-top: 12px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #888;
-  line-height: 1.6;
 }
 
 .main-content {

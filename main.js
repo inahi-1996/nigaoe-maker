@@ -61,7 +61,7 @@ const PARTS = {
 }
 
 // レイヤー描画順
- const LAYER_ORDER = ["face", "nose", "mouth", "eyes", "eyebrows", "hair"]
+const LAYER_ORDER = ["face", "nose", "mouth", "eyes", "eyebrows", "hair"]
 
 // =====================
 // State
