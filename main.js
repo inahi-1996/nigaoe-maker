@@ -15,6 +15,8 @@ const PARTS = {
     { id: "eye_05", label: "伏し目",   src: "assets/eye/eye_05.svg" },
     { id: "eye_06", label: "半目",     src: "assets/eye/eye_06.svg" },
     { id: "eye_07", label: "大きな目", src: "assets/eye/eye_07.svg" },
+    { id: "eye_08", label: "eye_08",   src: "assets/eye/eye_08.svg" },
+    { id: "eye_09", label: "eye_09",   src: "assets/eye/eye_09.svg" },
     { id: "eye_00", label: "なし",     src: "" },
   ],
   eyebrows: [
@@ -25,6 +27,8 @@ const PARTS = {
     { id: "brow_05", label: "上がり眉", src: "assets/brow/brow_05.svg" },
     { id: "brow_06", label: "短め眉",   src: "assets/brow/brow_06.svg" },
     { id: "brow_07", label: "一文字眉", src: "assets/brow/brow_07.svg" },
+    { id: "brow_08", label: "brow_08",  src: "assets/brow/brow_08.svg" },
+    { id: "brow_09", label: "brow_09",  src: "assets/brow/brow_09.svg" },
     { id: "brow_00", label: "なし",     src: "" },
   ],
   nose: [
@@ -34,6 +38,8 @@ const PARTS = {
     { id: "nose_04", label: "高い鼻",   src: "assets/nose/nose_04.svg" },
     { id: "nose_05", label: "上向き鼻", src: "assets/nose/nose_05.svg" },
     { id: "nose_06", label: "団子鼻",   src: "assets/nose/nose_06.svg" },
+    { id: "nose_07", label: "nose_07",  src: "assets/nose/nose_07.svg" },
+    { id: "nose_08", label: "nose_08",  src: "assets/nose/nose_08.svg" },
     { id: "nose_00", label: "なし",     src: "" },
   ],
   mouth: [
@@ -44,6 +50,8 @@ const PARTS = {
     { id: "mouth_05", label: "開口",       src: "assets/mouth/mouth_05.svg" },
     { id: "mouth_06", label: "少し開き",   src: "assets/mouth/mouth_06.svg" },
     { id: "mouth_07", label: "ままり",     src: "assets/mouth/mouth_07.svg" },
+    { id: "mouth_08", label: "mouth_08",   src: "assets/mouth/mouth_08.svg" },
+    { id: "mouth_09", label: "mouth_09",   src: "assets/mouth/mouth_09.svg" },
     { id: "mouth_00", label: "なし",       src: "" },
   ],
   hair: [
@@ -56,6 +64,9 @@ const PARTS = {
     { id: "hair_07", label: "hair_07", src: "assets/hair/hair_07.svg" },
     { id: "hair_08", label: "hair_08", src: "assets/hair/hair_08.svg" },
     { id: "hair_09", label: "hair_09", src: "assets/hair/hair_09.svg" },
+    { id: "hair_10", label: "hair_10", src: "assets/hair/hair_10.svg" },
+    { id: "hair_11", label: "hair_11", src: "assets/hair/hair_11.svg" },
+    { id: "hair_12", label: "hair_12", src: "assets/hair/hair_12.svg" },
     { id: "hair_00", label: "なし",     src: "" },
   ],
 }
