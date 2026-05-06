@@ -94,7 +94,7 @@ const state = {
 // DOM
 // =====================
 const canvas   = document.getElementById("preview")
-const ctx      = canvas.getContext("2d")
+const ctx      = canvas.getContext("2d", { willReadFrequently: true })
 const partGrid = document.getElementById("partGrid")
 const tabs     = [...document.querySelectorAll(".chip")]
 const btnDone  = document.getElementById("btnDone")
